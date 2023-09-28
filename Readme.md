@@ -18,7 +18,7 @@ Watch My demo video to see the AI Restaurant Order Assistant in action: [Insert 
 
 To get started with the AI Restaurant Order Assistant, follow these steps:
 
-1. **Clone the Repository:** `git clone [Insert GitHub Repo Link]`
+1. **Clone the Repository:** `git clone https://github.com/Fatemeh-Farnaghizadeh/AI-Restaurant-Order-Assistant-based-on-GPT3.5-Django.git`
 
 2. **Create a Python Virtual Environment (venv), Activate It, and Install Required Packages:** 
    - Navigate to the project directory.
