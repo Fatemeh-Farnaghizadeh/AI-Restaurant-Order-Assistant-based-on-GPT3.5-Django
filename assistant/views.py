@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 import openai
 # import the generated API key from the secret_key file
 from .secret_key import API_KEY
+
 # loading the API key from the secret_key file
 openai.api_key = API_KEY
 
@@ -13,8 +14,11 @@ def home(request):
     try:
         # if the session does not have a messages key, create one
         if 'messages' not in request.session:
+            
             request.session['messages'] = [
-                {"role": "system", "content": """
+                {
+                    "role": "system", 
+                    "content": """
                         You are OrderBot, an automated service designed to collect orders for a fast-food restaurant. Here's the process:
 
                         - Begin by displaying the menu to the customer, which includes the item's name, size, and price.\n 
@@ -47,7 +51,9 @@ def home(request):
                         sprite large:3.00, medium:2.00, small:1.00
                         bottled water large:2.00 medium:1.50 small:1.00 \
                         '''
-                    """},
+                    """
+                },
+
                 {"role": "user", "content": " "}
             ]
 
@@ -62,7 +68,9 @@ def home(request):
             # format the response
             formatted_response = response['choices'][0]['message']['content']
             # append the response to the messages list
-            request.session['messages'].append({"role": "assistant", "content": formatted_response})
+            request.session['messages'].append(
+                {"role": "assistant", "content": formatted_response}
+            )
             request.session.modified = True
 
         if request.method == 'POST':
@@ -85,7 +93,9 @@ def home(request):
             # format the response
             formatted_response = response['choices'][0]['message']['content']
             # append the response to the messages list
-            request.session['messages'].append({"role": "assistant", "content": formatted_response})
+            request.session['messages'].append(
+                {"role": "assistant", "content": formatted_response}
+            )
             request.session.modified = True
             # redirect to the home page
             context = {
@@ -114,28 +124,34 @@ def home(request):
 def new_chat(request):
     # clear the messages list
     request.session.pop('messages', None)
-    
+
     return redirect('home')
 
 def bill(request):
 
     try:
-        request.session['messages'].append({"role": "system", "content": """If the user's order is complete, just return the order table in HTML format. 
-                -The tables just should contains the informations that customer entered, do not add extra informations.
-                -It is necessary to do not return any extra texts and just return the table.
-                -It is required to HTML table feature well-defined borders. you can use CSS styles. use BOLD text for titles. \n
-                -Table should be in restaurant BILL format. \n
-                -The table should contains this extra rows: \n
-                '''
-                <all items in customer order>
-                <total price>
-                <order type>
-                <delivery information>
-                '''
-                -Do not add any extra text to user order table. \n
-                -Return pickup or delivery informations in table. \n
-                -Start rows from left to right.\n
-                """})
+
+        message = {
+            "role": "system",
+            "content": """If the user's order is complete, just return the order table in HTML format. 
+                        - The tables just should contains the informations that customer entered, do not add extra informations.
+                        - It is necessary to do not return any extra texts and just return the table.
+                        - It is required to HTML table feature well-defined borders. you can use CSS styles. use BOLD text for titles. \n
+                        - Table should be in restaurant BILL format. \n
+                        - The table should contains this extra rows: \n
+                        '''
+                         <all items in customer order>
+                         <total price>
+                         <order type>
+                         <delivery information>
+                        '''
+                        - Do not add any extra text to user order table. \n
+                        - Return pickup or delivery informations in table. \n
+                        - Start rows from left to right.\n
+                        """     
+        }
+        request.session['messages'].append(message)
+            
         
         request.session.modified = True
         # call the openai API
@@ -148,12 +164,16 @@ def bill(request):
         # format the response
         formatted_response = response['choices'][0]['message']['content']
         # append the response to the messages list
-        request.session['messages'].append({"role": "assistant", "content": formatted_response})
+        request.session['messages'].append(
+            {"role": "assistant", "content": formatted_response}
+        )
         request.session.modified = True
 
         table = formatted_response
 
-        context = {'table': table}
+        context = {
+            'table': table
+        }
 
         return render(request, 'assistant/bill.html', context)
     
