@@ -24,4 +24,4 @@ db.sqlite3
 # Ignore any other files or directories you want to exclude
 
 #Ignore API Key
-./assistant/secret_key.py
+/assistant/secret_key.py
