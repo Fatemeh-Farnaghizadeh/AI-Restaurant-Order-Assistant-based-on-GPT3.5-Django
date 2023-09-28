@@ -1,0 +1,39 @@
+{% extends 'assistant/base.html' %}
+{% block title %} Home {% endblock %}
+{% block content %}
+<div class="row justify-content-center my-4">
+    <div class="col-md-7 mt-4">
+        <div class="card">
+            <h1 class="card-header text-center">AI Restaurant Order Assistant</h1>
+            <div class="card-body">
+                <div class="d-flex justify-content-end">
+                    <button type="button" class="btn btn-primary mb-3" onclick="location.href='{% url 'new_chat' %}'">New Chat +</button>
+                </div>
+                <div class="chat-history mb-3">
+                    {% for message in messages %}
+                    {% if forloop.counter > 2 %}
+                    <div class="card mb-2 {% if message.role == 'assistant' %}bg-success text-white{% endif %}">
+                        <div class="card-body p-2">
+                            <strong>{{ message.role|title }}:</strong> {{ message.content|linebreaksbr }}
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                <form action="." method="POST">
+                    <!-- this secures the form from malicious attacks during submission -->
+                    {% csrf_token %}
+                    <input class="form-control mb-2" required type="text" autofocus="autofocus" name="prompt" value="{{ prompt }}" id="">
+                    <button class="btn btn-success fw-bold" type="submit">
+                        Send
+                    </button>
+                    <!-- Move the "Go to Pay" button to the right corner -->
+                </form>
+                <div class="d-flex justify-content-end mt-2">
+                  <button class="btn btn-info", onclick="location.href='{% url 'bill' %}'">Go to Pay</button>
+              </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

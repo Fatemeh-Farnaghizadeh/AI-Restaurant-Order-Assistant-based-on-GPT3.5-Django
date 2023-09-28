@@ -1,0 +1,28 @@
+{% extends 'assistant/base.html' %}
+{% block title %} Home {% endblock %}
+{% block content %}
+<div class="row justify-content-center my-4">
+    <div class="col-md-7 mt-4">
+        <div class="card">
+            <h1 class="card-header text-center">AI Restaurant Order Assistant</h1>
+            <div class="card-body">
+                <div class="order-summary">
+                    <!-- Stylish "Customer Bill" text -->
+                    <p style="font-size: 20px; font-weight: bold; color: #0e2339; margin-bottom: 10px;">Customer Bill:</p>
+                    
+                    <!-- Display the order table here -->
+                    {{ table|safe }}
+
+                    <!-- Payment button to navigate to the payment page -->
+                    <div class="d-flex justify-content-between mt-2">
+                        <button class="btn btn-info" onclick="location.href='{% url 'bill' %}'">Go to Pay</button>
+                        <!-- Print button -->
+                        <button class="btn btn-primary" onclick="window.print()">Print</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
