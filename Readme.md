@@ -4,7 +4,12 @@ Welcome to the AI Restaurant Order Assistant project! This project combines the 
 
 ## Demo Video
 
-Watch My demo video to see the AI Restaurant Order Assistant in action: https://github.com/Fatemeh-Farnaghizadeh/AI-Restaurant-Order-Assistant-based-on-GPT3.5-Django/blob/master/Demo.gif
+Watch My demo video to see the AI Restaurant Order Assistant in action:
+
+<video width="640" height="360" controls autoplay>
+  <source src="https://github.com/Fatemeh-Farnaghizadeh/AI-Restaurant-Order-Assistant-based-on-GPT3.5-Django/blob/master/Demo.gif" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
 
 ## Key Features
 
